@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Board create</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+detail <br/>
+id : <input type="text" id="input_id" /> <br/>
+title : <input type="number" id="input_title" /> <br/>
+content : <input type="text" id="input_content" /> <br/>
+author : <input type="text" id="input_author" /> <br/>
+
+<button onclick="detail_board()">조회하기!</button>
+
+<script>
+  function detail_board(){
+    $.ajax({
+      url: '/api/board/detail',
+      method: 'GET',
+      success: function (data, status, xhr) {
+        alert("data : : " + JSON.stringify(data));
+      },
+      error: function (data, status, err) {
+      },
+      complete: function () {
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
