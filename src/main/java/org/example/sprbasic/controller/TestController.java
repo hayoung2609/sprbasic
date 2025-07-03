@@ -13,7 +13,7 @@ import java.util.Map;
 public class TestController {
 
     @ResponseBody
-    @RequestMapping("/test")
+    @RequestMapping("/test") // URL 1:1로 연결해주는 역할
     public String test() {
         return "test";
     }
