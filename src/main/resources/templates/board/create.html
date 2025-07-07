@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Board create</title>
+    <title>Board Create</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
 create <br/>
 title : <input type="text" id="input_title" /> <br/>
 content : <input type="text" id="input_content" /> <br/>
-
+author : <input type="text" id="input_author" /> <br/>
 <button onclick="create_board()">입력하기!</button>
 
 <script>
@@ -18,8 +18,9 @@ content : <input type="text" id="input_content" /> <br/>
             url: '/api/board/create',
             method: 'GET',
             data : {
-                title : $("#input_title").val(),  // key : value
-                content : $("#input_content").val()
+                title : $("#input_title").val()
+                , content : $("#input_content").val()
+                , author : $("#input_author").val()
             },
             success: function (data, status, xhr) {
                 alert("data : : " + JSON.stringify(data));
