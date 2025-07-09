@@ -1,5 +1,8 @@
 package org.example.sprbasic.service.Impl;
 
+import lombok.RequiredArgsConstructor;
+import org.example.sprbasic.domain.Board;
+import org.example.sprbasic.repository.BoardRepository;
 import org.example.sprbasic.service.BoardService;
 import org.springframework.stereotype.Service;
 
@@ -11,24 +14,35 @@ import java.util.Map;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    List<Map<String, Object>> list = new ArrayList<>();
-    int tempId = 0;
+    final BoardService boardService;
+    final BoardRepository boardRepository;
+
+
+    public BoardServiceImpl(BoardService boardService, BoardRepository boardRepository) {
+        this.boardService = boardService;
+        this.boardRepository = boardRepository;
+    }
 
     @Override
     public Map<String, Object> create(Map<String, Object> param) {
         String title = param.get("title").toString();
         String content = param.get("content").toString();
         String author = param.get("author").toString();
+
+        Board board = new Board((long)++tempId, title, content, author);
+        boardRepository.save(board);
+
+        /*
         Map<String,Object> map_board = new HashMap<>();
         map_board.put("id", ++tempId);
         map_board.put("title", title);
         map_board.put("content", content);
         map_board.put("author", author);
         list.add(map_board);
+        */
 
         Map<String,Object> map_result = new HashMap<>();
         map_result.put("code", 200);
-        map_result.put("totalsize", list.size());
         return map_result;
     }
 
