@@ -1,21 +1,23 @@
 package org.example.sprbasic.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class) //이게 있어야 자동으로 값 넣어줌!!
+@Getter
 @Entity // 고유값이 있어야함
 public class Board {
     @Id // @Id는 테이블에서 PK로 사용됨. 무조건 unique 해야함.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // id 값 자동으로 올려줌.
     Long id;
-    String title;
-    String content;
-    String author;
+
+    @Setter String title;
+    @Setter String content;
+    @Setter String author;
 
     protected Board() {} // 안 쓸거지만 일단 선언.
-
     private Board(String title, String content, String author) {
         this.title = title;
         this.content = content;
