@@ -11,12 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Entity // 고유값이 있어야함
 public class Board extends AuditingField {
-    /*
-    @Id // @Id는 테이블에서 PK로 사용됨. 무조건 unique 해야함.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // id 값 자동으로 올려줌.
-    Long id;
-    */
-
     String title;
     String content;
     String author;
