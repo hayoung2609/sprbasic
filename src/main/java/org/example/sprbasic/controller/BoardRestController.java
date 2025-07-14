@@ -1,6 +1,7 @@
 package org.example.sprbasic.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.sprbasic.dto.BoardDto;
 import org.example.sprbasic.service.BoardService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,26 +15,24 @@ public class BoardRestController {
     final BoardService boardService;
 
     @PostMapping("")
-    public Map<String, Object> create(@RequestBody Map<String, Object> param){
+    public BoardDto.CreateResDto create(@RequestBody BoardDto.CreateReqDto param){
         return boardService.create(param);
     }
     @PutMapping("")
-    public Map<String, Object> update(@RequestBody Map<String, Object> param){
-        return boardService.update(param);
+    public void update(@RequestBody BoardDto.UpdateReqDto param){
+        boardService.update(param);
     }
     @DeleteMapping("")
-    public Map<String, Object> delete(@RequestBody Map<String, Object> param){
-        Long id = Long.parseLong(param.get("id").toString());
-        return boardService.delete(id);
+    public void delete(@RequestBody BoardDto.UpdateReqDto param){
+        boardService.delete(param.getId());
     }
 
     @GetMapping("/detail/{id}")
-    public Map<String, Object> detail(@PathVariable long id){
+    public BoardDto.DetailResDto detail(@PathVariable long id){
         return boardService.detail(id);
     }
     @GetMapping("/list")
-    public Map<String, Object> list(){
+    public List<BoardDto.DetailResDto> list(){
         return boardService.list();
     }
-
 }
