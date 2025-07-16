@@ -2,7 +2,7 @@ package org.example.sprbasic.service.Impl;
 
 import org.example.sprbasic.domain.Board;
 import org.example.sprbasic.dto.BoardDto;
-import org.example.sprbasic.dto.BoardCreateReqDto;
+import org.example.sprbasic.dto.DefaultDto;
 import org.example.sprbasic.repository.BoardRepository;
 import org.example.sprbasic.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -17,50 +17,43 @@ public class BoardServiceImpl implements BoardService {
     final BoardRepository boardRepository;
 
     @Override
-    public BoardDto.CreateResDto create(BoardDto.CreateReqDto param) {
-        String title = param.getTitle();
-        String content = param.getContent();
-        String author = param.getAuthor();
-
-        Board board = Board.of(title, content, author);
-        board = boardRepository.save(board);
-        /*
-        BoardDto.CreateResDto resDto = new BoardDto.CreateResDto();
-        resDto.setId(board.getId());
-
-        BoardDto.CreateResDto resDto1 = BoardDto.CreateResDto().builder().id(board.getId()).build();
-         */
-        return BoardDto.CreateResDto.builder().id(board.getId()).build();
+    public DefaultDto.CreateResDto create(BoardDto.CreateReqDto param) {
+        return boardRepository.save(param.toEntity()).toCreateResDto();
     }
 
     @Override
     public void update(BoardDto.UpdateReqDto param) {
-        int code = 200;
-        long id = param.getId();
-        Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
-        if (param.getTitle() != null) {
-            board.setTitle(param.getTitle());
-        }
-        if (param.getContent() != null) {
-            board.setContent(param.getContent());
-        }
-        if (param.getAuthor() != null) {
-            board.setAuthor(param.getAuthor());
-        }
+        Board board = boardRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException("no data"));
+        if(param.getDeleted() != null){ board.setDeleted(param.getDeleted()); }
+        if(param.getTitle() != null){ board.setTitle(param.getTitle()); }
+        if(param.getContent() != null){ board.setContent(param.getContent()); }
+        if(param.getAuthor() != null){ board.setAuthor(param.getAuthor()); }
         boardRepository.save(board);
     }
 
     @Override
     public void delete(long id) {
+        /*
+        // 0번 방법!
+        boardRepository.delete(board); // 완전 삭제!
+
+        // 1번 방법!
         Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
-        boardRepository.delete(board);
+        board.setDeleted(true);
+        boardRepository.save(board); // 소프트 딜리트!
+        */
+
+        // 2번 방법!
+        update(BoardDto.UpdateReqDto.builder().id(id).deleted(true).build());
     }
 
     public BoardDto.DetailResDto get(long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("no data"));
 
         return BoardDto.DetailResDto.builder().id(board.getId())
-                .title(board.getTitle()).content(board.getContent()).author(board.getAuthor()).build();
+                .deleted(board.getDeleted()).createdAt(board.getCreatedAt())
+                .modifiedAt(board.getModifiedAt()).title(board.getTitle())
+                .content(board.getContent()).author(board.getAuthor()).build();
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/board")
 @Controller // 중요한 개념일수록 아래에 적는 스타일
-public class BoardController {
+public class BoardPageController {
 
     /*
     @RequestMapping("/create")
@@ -20,8 +20,6 @@ public class BoardController {
     public String page(@PathVariable String page){
         return "board/" + page;
     }
-
-
 }
 
 

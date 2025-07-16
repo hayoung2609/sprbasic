@@ -3,10 +3,8 @@ package org.example.sprbasic.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.domain.Auditable;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.example.sprbasic.dto.DefaultDto;
 
-@EntityListeners(AuditingEntityListener.class) //이게 있어야 자동으로 값 넣어줌!!
 @Setter
 @Getter
 @Entity // 고유값이 있어야함
@@ -25,5 +23,8 @@ public class Board extends AuditingField {
     // 이 메서드를 통해서만 데이터 생성 가능.
     public static Board of(String title, String content, String author) {
         return new Board(title, content, author);
+    }
+    public DefaultDto.CreateResDto toCreateResDto(){
+        return DefaultDto.CreateResDto.builder().id(getId()).build();
     }
 }
