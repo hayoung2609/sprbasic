@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto.DetailResDto get(DefaultDto.DetailReqDto param) {
-        User user = UserRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException("no data"));
+        User user = userRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException("no data"));
 
         return UserDto.DetailResDto.builder().id(user.getId())
                 .deleted(user.getDeleted()).createdAt(user.getCreatedAt())
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto.DetailResDto> list(UserDto.ListReqDto param) {
         List<UserDto.DetailResDto> resultList = new ArrayList<>();
-        List<User> list = UserRepository.findAll();
+        List<User> list = userRepository.findAll();
         for (User each : list) {
             boolean isSearched = true;
             if(param.getDeleted() != null){
