@@ -12,3 +12,4 @@ public interface UserMapper {
     // 목록
     List<UserDto.DetailResDto> list(UserDto.ListReqDto param);
 }
+
