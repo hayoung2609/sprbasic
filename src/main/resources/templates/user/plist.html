@@ -12,6 +12,17 @@ name : <input type="text" id="input_name"/>
 phone : <input type="text" id="input_phone"/>
 callpage : <input type="number" id="input_callpage"/>
 perpage : <input type="number" id="input_perpage"/>
+orderby :
+<select id="input_orderby">
+    <option value="id">등록순</option>
+    <option value="name">이름순</option>
+</select>
+orderway :
+<select id="input_orderby">
+    <option value="desc">역방향</option>
+    <option value="asc">정방향</option>
+</select>
+
 <button onclick="list_user()">조회하기!</button>
 
 <div id="div_list">
@@ -31,6 +42,8 @@ perpage : <input type="number" id="input_perpage"/>
                 , phone : $("#input_phone").val()
                 , callpage : $("#input_callpage").val()
                 , perpage : $("#input_perpage").val()
+                , orderby : $("#input_orderby").val()
+                , orderway : $("#input_orderway").val()
             },
             success: function (data, status, xhr) {
                 alert("data : " + JSON.stringify(data));
