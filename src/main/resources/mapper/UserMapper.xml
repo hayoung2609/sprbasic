@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.sprbasic.mapper.UserMapper">
-    <!---->
+<!---->
     <select id="detail" parameterType="hashMap" resultType="org.example.sprbasic.dto.UserDto$DetailResDto">
         SELECT user.id
              , user.deleted
@@ -24,7 +23,7 @@
     </select>
 
 
-    <select id="pagedList" parameterType="hashMap" resultType="com.thc.sprbasic2025summer.dto.UserDto$DetailResDto">
+    <select id="pagedList" parameterType="hashMap" resultType="org.example.sprbasic.dto.UserDto$DetailResDto">
         SELECT user.id
         FROM user
         WHERE user.id is not NULL
@@ -32,6 +31,12 @@
         <if test = "username != null and username !=''">AND user.username = #{username}</if>
         <if test = "name != null and name !=''">AND user.name LIKE CONCAT('%', #{name}, '%')</if>
         <if test = "phone != null and phone !=''">AND user.phone LIKE CONCAT('%', #{phone}, '%')</if>
+        ORDER BY
+        <if test = "orderby != null and orderby =='id'">user.id</if>
+        <if test = "orderby != null and orderby =='name'">user.name</if>
+        <if test = "orderway != null and orderway =='desc'">DESC</if>
+        <if test = "orderway != null and orderway =='asc'">ASC</if>
+        DESC
         LIMIT #{offset}, #{perpage}
     </select>
     <select id="pagedListCount" parameterType="hashMap" resultType="Integer">
@@ -42,5 +47,18 @@
         <if test = "username != null and username !=''">AND user.username = #{username}</if>
         <if test = "name != null and name !=''">AND user.name LIKE CONCAT('%', #{name}, '%')</if>
         <if test = "phone != null and phone !=''">AND user.phone LIKE CONCAT('%', #{phone}, '%')</if>
+    </select>
+
+    <select id="scorllList" parameterType="hashMap" resultType="org.example.sprbasic.dto.UserDto$DetailResDto">
+        SELECT user.id
+        FROM user
+        WHERE user.id is not NULL
+        <if test = "deleted != null">AND user.deleted = #{deleted}</if>
+        <if test = "username != null and username !=''">AND user.username = #{username}</if>
+        <if test = "name != null and name !=''">AND user.name LIKE CONCAT('%', #{name}, '%')</if>
+        <if test = "phone != null and phone !=''">AND user.phone LIKE CONCAT('%', #{phone}, '%')</if>
+        <if test = "cursor != null and cursor !=''">AND #{cursor} > user.id</if>
+        ORDER BY user.id DESC
+        LIMIT 0, #{perpage}
     </select>
 </mapper>
