@@ -1,6 +1,5 @@
 package org.example.sprbasic.service;
 
-import org.example.sprbasic.dto.BoardDto;
 import org.example.sprbasic.dto.DefaultDto;
 import org.springframework.stereotype.Service;
 

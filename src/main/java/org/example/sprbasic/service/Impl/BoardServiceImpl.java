@@ -1,9 +1,6 @@
 package org.example.sprbasic.service.Impl;
 
-import org.example.sprbasic.domain.Board;
-import org.example.sprbasic.dto.BoardDto;
 import org.example.sprbasic.dto.DefaultDto;
-import org.example.sprbasic.repository.BoardRepository;
 import org.example.sprbasic.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
