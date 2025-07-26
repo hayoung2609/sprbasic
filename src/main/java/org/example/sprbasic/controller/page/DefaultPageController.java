@@ -42,6 +42,7 @@ public class DefaultPageController {
         return "calculate"; // Thymeleaf HTML 파일의 이름 반환
     }
 
+
     @RequestMapping("/calculate3")
     public String calculate3(int num1, int num2, Model model){
         int mul = num1 * num2;
